@@ -6,7 +6,7 @@ networks:
       name: services-net
 
 services:
-  reverse_proxy:
+  nginx_proxy:
     image: jwilder/nginx-proxy
     container_name: nginx-proxy
     labels:
