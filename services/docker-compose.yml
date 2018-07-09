@@ -1,0 +1,100 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: services-net
+
+services:
+
+  airsonic:
+    image: airsonic/airsonic
+    container_name: airsonic
+    user: 2100:2100
+    environment:
+      - TZ=Europe/Paris
+      - "VIRTUAL_HOST=airsonic.wilply.fr"
+      - "VIRTUAL_PORT=4040"
+      - "LETSENCRYPT_HOST=airsonic.wilply.fr"
+      - "LETSENCRYPT_EMAIL=nas@wilply.fr"
+    volumes:
+      - /mnt/DATA/DOCKER/container_app/airsonic/data:/airsonic/data
+      - /mnt/DATA/DOCKER/container_app/airsonic/playlists:/airsonic/playlists
+      - /mnt/DATA/DOCKER/container_app/airsonic/podcasts:/airsonic/podcasts
+      - /mnt/DATA/MEDIA/Musique:/airsonic/music
+    ports:
+      - 4040:4040
+
+  transmission:
+    image: linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PGID=2100
+      - PUID=2100
+      - TZ=Europe/Paris
+      - "VIRTUAL_HOST=transmission.wilply.fr"
+      - "VIRTUAL_PORT=9091"
+      - "LETSENCRYPT_HOST=transmission.wilply.fr"
+      - "LETSENCRYPT_EMAIL=nas@wilply.fr"
+    volumes:
+      - /mnt/DATA/DOCKER/container_app/transmission:/config
+      - /mnt/DATA/DOWNLOAD:/downloads
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+  teamspeak:
+    image: mbentley/teamspeak
+    container_name: teamspeak
+    environment:
+      - TZ=Europe/Paris
+    volumes:
+      - /mnt/DATA/DOCKER_CONFIG/teamspeak/data:/data
+    ports:
+      - 9987:9987/udp
+      - 10011:10011
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    environment:
+      - "MYSQL_ROOT_PASSWORD=wilplydbpwd"
+      - "MYSQL_USER=wilply"
+      - "MYSQL_PASSWORD=wilplydbpwd"
+      - "MYSQL_DATABASE=wilplydb"
+    volumes:
+      - /mnt/DATA/DOCKER/container_app/docker_db:/var/lib/mysql
+    networks:
+      default:
+        ipv4_address: 172.18.10.1
+
+  filerun:
+    image: wilply/filerun_docker
+    container_name: filerun
+    depends_on:
+      - db
+    environment:
+      - "LOAD_SMB=true"
+      - TZ=Europe/Paris
+      - "VIRTUAL_HOST=filerun.wilply.fr"
+      - "LETSENCRYPT_HOST=filerun.wilply.fr"
+      - "LETSENCRYPT_EMAIL=nas@wilply.fr"
+    ports:
+      - "8081:80"
+    volumes:
+      - /mnt/DATA/DOCKER/container_app/filerun_docker:/app
+    cap_add:
+      - SYS_ADMIN
+      - DAC_READ_SEARCH
+
+  projetweb:
+    image: wilply/docker_lemp_server
+    container_name: projetweb
+    environment:
+      - TZ=Europe/Paris
+      - "VIRTUAL_HOST=projetweb.wilply.fr"
+      - "LETSENCRYPT_HOST=projetweb.wilply.fr"
+      - "LETSENCRYPT_EMAIL=nas@wilply.fr"
+    ports:
+      - "8082:80"
+    volumes:
+      - /mnt/DATA/DOCKER/container_app/projetweb/IUT_M2105:/app/site
