@@ -71,7 +71,7 @@ services:
     image: wilply/filerun_docker
     container_name: filerun
     depends_on:
-      - db
+      - mariadb
     environment:
       - "LOAD_SMB=true"
       - TZ=Europe/Paris
