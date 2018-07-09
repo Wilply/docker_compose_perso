@@ -1,0 +1,38 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: services-net
+
+services:
+  reverse_proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true"
+    environment:
+      - TZ="Europe/Paris"
+    volumes:
+      - /mnt/DATA/DOCKER/container_app/reverse_proxy/certs:/etc/nginx/certs:ro
+      - /mnt/DATA/DOCKER/container_app/reverse_proxy/vhost.d:/etc/nginx/vhost.d
+      - /mnt/DATA/DOCKER/container_app/reverse_proxy/html:/usr/share/nginx/html
+      - /mnt/DATA/DOCKER/container_app/reverse_proxy/conf.d:/etc/nginx/conf.d
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+
+  lets_encrypts:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: lets-encrypts
+    environment:
+      - TZ="Europe/Paris"
+    volumes:
+      - /mnt/DATA/DOCKER/container_app/reverse_proxy/certs:/etc/nginx/certs:rw
+      - /mnt/SDATA/DOCKER/container_app/reverse_proxy/vhost.d:/etc/nginx/vhost.d
+      - /mnt/DATA/DOCKER/container_app/reverse_proxy/html:/usr/share/nginx/html
+      - /mnt/DATA/DOCKER/container_app/reverse_proxy/conf.d:/etc/nginx/conf.d
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: always
