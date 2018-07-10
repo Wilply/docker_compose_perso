@@ -63,15 +63,12 @@ services:
       - "MYSQL_DATABASE=wilplydb"
     volumes:
       - /mnt/DATA/DOCKER/container_app/docker_db:/var/lib/mysql
-    networks:
-      default:
-        ipv4_address: 172.18.10.1
 
   filerun:
     image: wilply/filerun_docker
     container_name: filerun
-    depends_on:
-      - mariadb
+    links:
+      - mariadb:ext_database
     environment:
       - "LOAD_SMB=true"
       - TZ=Europe/Paris
