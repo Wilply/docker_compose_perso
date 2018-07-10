@@ -48,6 +48,7 @@ services:
     container_name: teamspeak
     environment:
       - TZ=Europe/Paris
+      - "TS3SERVER_LICENSE=accept"
     volumes:
       - /mnt/DATA/DOCKER/container_app/teamspeak/data:/data
     ports:
