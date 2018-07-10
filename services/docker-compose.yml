@@ -49,7 +49,7 @@ services:
     environment:
       - TZ=Europe/Paris
     volumes:
-      - /mnt/DATA/DOCKER_CONFIG/teamspeak/data:/data
+      - /mnt/DATA/DOCKER:container_app/teamspeak/data:/data
     ports:
       - 9987:9987/udp
       - 10011:10011
