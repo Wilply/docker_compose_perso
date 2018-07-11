@@ -10,7 +10,6 @@ services:
   airsonic:
     image: airsonic/airsonic
     container_name: airsonic
-    user: "2100"
     environment:
       - TZ=Europe/Paris
       - "VIRTUAL_HOST=airsonic.wilply.fr"
@@ -18,9 +17,9 @@ services:
       - "LETSENCRYPT_HOST=airsonic.wilply.fr"
       - "LETSENCRYPT_EMAIL=nas@wilply.fr"
     volumes:
-      - /mnt/DATA/DOCKER/container_app/airsonic/data:/airsonic/data
-      - /mnt/DATA/DOCKER/container_app/airsonic/playlists:/airsonic/playlists
-      - /mnt/DATA/DOCKER/container_app/airsonic/podcasts:/airsonic/podcasts
+      - /mnt/DATA/DOCKER/container_app/docker_airsonic/data:/airsonic/data
+      - /mnt/DATA/DOCKER/container_app/docker_airsonic/playlists:/airsonic/playlists
+      - /mnt/DATA/DOCKER/container_app/docker_airsonic/podcasts:/airsonic/podcasts
       - /mnt/DATA/MEDIA/Musique:/airsonic/music
     ports:
       - 4040:4040
