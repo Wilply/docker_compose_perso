@@ -8,7 +8,7 @@ networks:
 services:
 
   airsonic:
-    image: airsonic/airsonic
+    image: linuxserver/airsonic
     container_name: airsonic
     environment:
       - TZ=Europe/Paris
@@ -16,11 +16,14 @@ services:
       - "VIRTUAL_PORT=4040"
       - "LETSENCRYPT_HOST=airsonic.wilply.fr"
       - "LETSENCRYPT_EMAIL=nas@wilply.fr"
+      - "PGID=2100"
+      - "PUID=2100"
+      - "JAVA_OPTS=-Xmx768m"
     volumes:
-      - /mnt/DATA/DOCKER/container_app/docker_airsonic/data:/airsonic/data
-      - /mnt/DATA/DOCKER/container_app/docker_airsonic/playlists:/airsonic/playlists
-      - /mnt/DATA/DOCKER/container_app/docker_airsonic/podcasts:/airsonic/podcasts
-      - /mnt/DATA/MEDIA/Musique:/airsonic/music
+      - /mnt/DATA/DOCKER/container_app/docker_airsonic/data:/config
+      - /mnt/DATA/DOCKER/container_app/docker_airsonic/playlists:/playlists
+      - /mnt/DATA/DOCKER/container_app/docker_airsonic/podcasts:/podcasts
+      - /mnt/DATA/MEDIA/Musique:/music
     ports:
       - 4040:4040
 
@@ -36,12 +39,13 @@ services:
       - "LETSENCRYPT_HOST=transmission.wilply.fr"
       - "LETSENCRYPT_EMAIL=nas@wilply.fr"
     volumes:
-      - /mnt/DATA/DOCKER/container_app/transmission:/config
+      - /mnt/DATA/DOCKER/container_app/docker_transmission:/config
       - /mnt/DATA/DOWNLOAD:/downloads
     ports:
       - 9091:9091
       - 51413:51413
       - 51413:51413/udp
+
   teamspeak:
     image: mbentley/teamspeak
     container_name: teamspeak
@@ -49,10 +53,11 @@ services:
       - TZ=Europe/Paris
       - "TS3SERVER_LICENSE=accept"
     volumes:
-      - /mnt/DATA/DOCKER/container_app/teamspeak/data:/data
+      - /mnt/DATA/DOCKER/container_app/docker_teamspeak/data:/data
     ports:
       - 9987:9987/udp
       - 10011:10011
+
   mariadb:
     image: mariadb
     container_name: mariadb
@@ -78,7 +83,7 @@ services:
     ports:
       - "8081:80"
     volumes:
-      - /mnt/DATA/DOCKER/container_app/filerun_docker:/app
+      - /mnt/DATA/DOCKER/container_app/docker_filerun:/app
     cap_add:
       - SYS_ADMIN
       - DAC_READ_SEARCH
@@ -94,4 +99,4 @@ services:
     ports:
       - "8082:80"
     volumes:
-      - /mnt/DATA/DOCKER/container_app/projetweb/IUT_M2105:/app/site
+      - /mnt/DATA/DOCKER/container_app/docker_projetweb/IUT_M2105:/app/site
