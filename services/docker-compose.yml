@@ -10,7 +10,7 @@ services:
   airsonic:
     image: airsonic/airsonic
     container_name: airsonic
-    user: 2100
+    user: "2100"
     environment:
       - TZ=Europe/Paris
       - "VIRTUAL_HOST=airsonic.wilply.fr"
