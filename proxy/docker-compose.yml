@@ -33,7 +33,7 @@ services:
       - nginx_proxy
     volumes:
       - /mnt/DATA/DOCKER/container_app/reverse_proxy/certs:/etc/nginx/certs:rw
-      - /mnt/SDATA/DOCKER/container_app/reverse_proxy/vhost.d:/etc/nginx/vhost.d
+      - /mnt/DATA/DOCKER/container_app/reverse_proxy/vhost.d:/etc/nginx/vhost.d
       - /mnt/DATA/DOCKER/container_app/reverse_proxy/html:/usr/share/nginx/html
       - /mnt/DATA/DOCKER/container_app/reverse_proxy/conf.d:/etc/nginx/conf.d
       - /var/run/docker.sock:/var/run/docker.sock:ro
