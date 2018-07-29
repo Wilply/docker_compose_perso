@@ -52,8 +52,6 @@ services:
     environment:
       - TZ=Europe/Paris
       - "TS3SERVER_LICENSE=accept"
-      - "VIRTUAL_HOST=teamspeak.wilply.fr"
-      - "VIRTUAL_PORT=9987"
     volumes:
       - /mnt/DATA/DOCKER/container_app/docker_teamspeak/data:/data
     ports:
