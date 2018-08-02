@@ -1,0 +1,39 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: dev-net
+
+services:
+
+  cells:
+    image: pydio/cells:latest
+    container_name: pydio_test
+    restart: always
+    volumes:
+      - static:/root/.config/pydio/cells/static/pydio
+    ports: ["8080:8080"]
+    environment:
+      - CELLS_BIND=localhost:8080
+      - CELLS_EXTERNAL=localhost:8080
+      - CELLS_NO_SSL=1
+
+  mysql:
+    image: mariadb
+    container_name: db_test
+    restart: always
+    environment:
+      - "MYSQL_ROOT_PASSWORD: P@ssw0rd
+      - "MYSQL_DATABASE: cells
+      - "MYSQL_USER: pydio
+      - "MYSQL_PASSWORD: P@ssw0rd
+
+  php:
+    image: pydio/cells-php-fpm
+    restart: always
+    volumes:
+      - static:/root/.config/pydio/cells/static/pydio
+
+volumes:
+    static: {}
