@@ -10,19 +10,20 @@ services:
   cells:
     image: pydio/cells:latest
     container_name: pydio_test
-    restart: always
     volumes:
       - static:/root/.config/pydio/cells/static/pydio
-    ports: ["8080:8080"]
+    ports:
+      - 8090:8080
     environment:
       - CELLS_BIND=localhost:8080
       - CELLS_EXTERNAL=localhost:8080
       - CELLS_NO_SSL=1
+    links:
+      - db_test:mariadb
 
-  mysql:
+  db_test:
     image: mariadb
     container_name: db_test
-    restart: always
     environment:
       - "MYSQL_ROOT_PASSWORD: P@ssw0rd
       - "MYSQL_DATABASE: cells
@@ -31,9 +32,11 @@ services:
 
   php:
     image: pydio/cells-php-fpm
-    restart: always
+    container_name: pydio_php
     volumes:
       - static:/root/.config/pydio/cells/static/pydio
+    links:
+      - db_test:mariadb
 
 volumes:
     static: {}
