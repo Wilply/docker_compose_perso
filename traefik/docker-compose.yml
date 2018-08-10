@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+
+  reverse-proxy:
+    image: traefik
+    command: --api --docker
+    ports:
+      - "80:80"     # Http
+      - "8080:8080" # Web UI
+      - "443:443"   # Https
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Docker events
