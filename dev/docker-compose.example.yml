@@ -1,0 +1,10 @@
+#mount cifs share as local volumes
+#you can create multiple volumes with the same ip
+#that's awesome isn't it ?
+volumes:
+    cifs_volume_name:
+      driver: local
+      driver_opts:
+        type: cifs
+        device: '//path/to/share'
+        o: 'username=user1,password=user1pwd,gid=...'
