@@ -13,15 +13,13 @@ services:
     restart: always
     environment:
       - TZ=Europe/Paris
+      - "VIRTUAL_HOST=airsonic.wilply.fr"
+      - "VIRTUAL_PORT=4040"
+      - "LETSENCRYPT_HOST=airsonic.wilply.fr"
+      - "LETSENCRYPT_EMAIL=nas@wilply.fr"
       - "PGID=2100"
       - "PUID=2100"
       - "JAVA_OPTS=-Xmx768m"
-    labels:
-      - traefik.backend=airsonic
-      - traefik.frontend.rule=Host:airsonic.wilply.fr
-      - traefik.port=4040
-      - traefik.enable=true
-      - traefik.protocol=http
     volumes:
       - /mnt/DATA/DOCKER/container_app/docker_airsonic/data:/config
       - /mnt/DATA/DOCKER/container_app/docker_airsonic/playlists:/playlists
@@ -38,12 +36,10 @@ services:
       - PGID=2100
       - PUID=2100
       - TZ=Europe/Paris
-    labels:
-      - traefik.backend=transmission
-      - traefik.frontend.rule=Host:transmission.wilply.fr
-      - traefik.port=9091
-      - traefik.enable=true
-      - traefik.protocol=http
+      - "VIRTUAL_HOST=transmission.wilply.fr"
+      - "VIRTUAL_PORT=9091"
+      - "LETSENCRYPT_HOST=transmission.wilply.fr"
+      - "LETSENCRYPT_EMAIL=nas@wilply.fr"
     volumes:
       - /mnt/DATA/DOCKER/container_app/docker_transmission:/config
       - /mnt/DATA/DOWNLOAD:/downloads
@@ -77,19 +73,36 @@ services:
     volumes:
       - /mnt/DATA/DOCKER/container_app/docker_db:/var/lib/mysql
 
+  filerun:
+    image: wilply/filerun_docker
+    container_name: filerun
+    restart: always
+    links:
+      - mariadb:ext_database
+    environment:
+      - "LOAD_SMB=true"
+      - TZ=Europe/Paris
+      - "VIRTUAL_HOST=filerun.wilply.fr"
+      - "LETSENCRYPT_HOST=filerun.wilply.fr"
+      - "LETSENCRYPT_EMAIL=nas@wilply.fr"
+    ports:
+      - "8081:80"
+    volumes:
+      - /mnt/DATA/DOCKER/container_app/docker_filerun:/app
+    cap_add:
+      - SYS_ADMIN
+      - DAC_READ_SEARCH
+
   projetweb:
     image: wilply/docker_lemp_server
     container_name: projetweb
     restart: always
     environment:
       - TZ=Europe/Paris
-    labels:
-      - traefik.backend=projetweb
-      - traefik.frontend.rule=Host:projetweb.wilply.fr
-      - traefik.port=80
-      - traefik.enable=true
-      - traefik.protocol=http
-    expose:
-      - 80
+      - "VIRTUAL_HOST=projetweb.wilply.fr"
+      - "LETSENCRYPT_HOST=projetweb.wilply.fr"
+      - "LETSENCRYPT_EMAIL=nas@wilply.fr"
+    ports:
+      - "8082:80"
     volumes:
       - /mnt/DATA/DOCKER/container_app/docker_projetweb/IUT_M2105:/app/site
