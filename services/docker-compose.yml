@@ -6,7 +6,6 @@ networks:
       name: services-net
 
 volumes:
-    static: {}
     cifs_media:
       driver: local
       driver_opts:
