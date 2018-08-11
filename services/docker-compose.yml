@@ -10,6 +10,7 @@ services:
   airsonic:
     image: linuxserver/airsonic
     container_name: airsonic
+    restart: always
     environment:
       - TZ=Europe/Paris
       - "VIRTUAL_HOST=airsonic.wilply.fr"
@@ -30,6 +31,7 @@ services:
   transmission:
     image: linuxserver/transmission
     container_name: transmission
+    restart: always
     environment:
       - PGID=2100
       - PUID=2100
@@ -49,6 +51,7 @@ services:
   teamspeak:
     image: mbentley/teamspeak
     container_name: teamspeak
+    restart: always
     environment:
       - TZ=Europe/Paris
       - "TS3SERVER_LICENSE=accept"
@@ -61,6 +64,7 @@ services:
   mariadb:
     image: mariadb
     container_name: mariadb
+    restart: always
     environment:
       - "MYSQL_ROOT_PASSWORD=wilplydbpwd"
       - "MYSQL_USER=wilply"
@@ -72,6 +76,7 @@ services:
   filerun:
     image: wilply/filerun_docker
     container_name: filerun
+    restart: always
     links:
       - mariadb:ext_database
     environment:
@@ -91,6 +96,7 @@ services:
   projetweb:
     image: wilply/docker_lemp_server
     container_name: projetweb
+    restart: always
     environment:
       - TZ=Europe/Paris
       - "VIRTUAL_HOST=projetweb.wilply.fr"

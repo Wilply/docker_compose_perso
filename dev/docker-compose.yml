@@ -14,32 +14,36 @@ services:
 
   pydio:
     image: pydio/cells
-    container_name: pydio
+    container_name: pydio_test
     environment:
-      - "CELLS_BIND=192.168.0.20:8080"
-      - "CELLS_EXTERNAL=172.18.0.10:8080"
+      - "CELLS_BIND=192.168.0.150:8083"
+      - "CELLS_EXTERNAL=172.18.0.20:8083"
       - "CELLS_NO_SSL=1"
+      - "VIRTUAL_HOST=pydio.wilply.fr"
+      - "VIRTUAL_PORT=8083"
     volumes:
       - static:/root/.config/pydio/cells/static/pydio
       - cifs_data:/mnt/DATA
     ports:
-      - 8080:8080
+      - 8083:8083
     links:
       - db_test
       - php
     networks:
       default:
-        ipv4_address: 172.18.0.10
+        ipv4_address: 172.18.0.20
   php:
     image: pydio/cells-php-fpm:latest
     container_name: php
     volumes:
       - static:/root/.config/pydio/cells/static/pydio
+    expose:
+     - 9000
 
 networks:
   default:
     external:
-      name: dev-net
+      name: services-net
 
 volumes:
     static: {}

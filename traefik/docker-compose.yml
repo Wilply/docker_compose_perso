@@ -1,13 +1,36 @@
 version: '3'
 
+networks:
+  default:
+    external:
+      name: services-net
+
 services:
 
   reverse-proxy:
-    image: traefik
+    image: traefik:alpine
     command: --api --docker
+    environment:
+      - "OVH_ENDPOINT=ovh-eu"
+      - "OVH_APPLICATION_KEY=vOiQhGm6urgJCzY9"
+      - "OVH_APPLICATION_SECRET=pPRMRTW1CE2gKkyi6NtRCVjuT6seittT"
+      - "OVH_CONSUMER_KEY=I0kCZy7aLn7fFCxPHMcozKKRZV2eflKS"
     ports:
       - "80:80"     # Http
       - "8080:8080" # Web UI
       - "443:443"   # Https
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock  # Docker events
+      - /mnt/DATA/DOCKER/container_app/docker_traefik/:/etc/traefik/
+
+
+  whoami1:
+    image: emilevauge/whoami
+    labels:
+      - traefik.backend=test
+      - traefik.frontend.rule=Host:test.wilply.fr
+      - traefik.port=80
+      - traefik.enable=true
+      - traefik.protocol=http
+    expose:
+      - 80
