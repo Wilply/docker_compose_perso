@@ -1,5 +1,5 @@
 version: '3'
-media:medias3cr3t nathalie:fraisetomate domaclena:domaclenas3cr3t lecoq:lecoqs3cr3t clement:clements3cr3tpwd
+
 networks:
   default:
     external:
