@@ -7,13 +7,18 @@ networks:
 
 services:
 
-  reverse-proxy:
-    image: traefik:alpine
+  traefik:
+    image: traefik
+    container_name: traefik
+    restart: always
     command: --api --docker
     ports:
       - 80:80     # Http
       - 8080:8080 # Web UI
       - 443:443   # Https
+    # This file is on my mail
+    env_file:
+      - ovh_key.env
     labels:
       - traefik.backend=traefik
       - traefik.frontend.rule=Host:traefik.wilply.fr
