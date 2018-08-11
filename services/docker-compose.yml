@@ -140,6 +140,8 @@ services:
     image: mariadb
     container_name: db_cells
     env_file: ./db.env
+    volumes:
+      - /mnt/DATA/DOCKER/container_app/docker_db:/var/lib/mysql
     command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
     expose:
       - 3306
