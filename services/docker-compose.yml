@@ -117,7 +117,7 @@ services:
       - 80
     labels:
       - traefik.enable=true
-      - traefik.backend=cells
+      - traefik.backend=nextcloud
       - traefik.frontend.rule=Host:nextcloud.wilply.fr
       - traefik.port=80
       - traefik.protocol=http
