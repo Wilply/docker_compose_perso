@@ -1,0 +1,72 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: services-net
+
+volumes:
+    cifs_media:
+      driver: local
+      driver_opts:
+        type: cifs
+        device: '//192.168.0.150/MEDIA'
+        o: 'username=media,password=medias3cr3t,uid=33,gid=33'
+
+    cifs_clement:
+      driver: local
+      driver_opts:
+        type: cifs
+        device: '//192.168.0.150/USERS'
+        o: 'username=clement,password=clements3cr3tpwd,uid=33,gid=33'
+
+    cifs_domaclena:
+      driver: local
+      driver_opts:
+        type: cifs
+        device: '//192.168.0.150/DOMACLENA'
+        o: 'username=domaclena,password=domaclenas3cr3t,uid=33,gid=33'
+
+    cifs_lecoq:
+      driver: local
+      driver_opts:
+        type: cifs
+        device: '//192.168.0.150/LECOQ'
+        o: 'username=lecoq,password=lecoqs3cr3t,uid=33,gid=33'
+
+services:
+
+  nextcloud:
+    image: nextcloud:stable
+    container_name: nextcloud
+    expose:
+      - 80
+    labels:
+      - traefik.enable=true
+      - traefik.backend=nextcloud
+      - traefik.frontend.rule=Host:nextcloud.wilply.fr
+      - traefik.port=80
+      - traefik.protocol=http
+      - traefik.frontend.headers.STSSeconds=315360000
+      - traefik.frontend.headers.STSPreload=true
+    volumes:
+      - /mnt/DATA/DOCKER/container_app/docker_nextcloud/default_files:/default_files/
+      - /mnt/DATA/DOCKER/container_app/docker_nextcloud/config:/var/www/html/config/
+      - /mnt/DATA/DOCKER/container_app/docker_nextcloud/custom_apps:/var/www/html/custom_apps/
+      - cifs_media:/mnt/media
+      - cifs_clement:/mnt/clement
+      - cifs_domaclena:/mnt/domaclena
+      - cifs_lecoq:/mnt/lecoq
+    links:
+      - db_nextcloud
+
+  db_nextcloud:
+    image: mariadb
+    container_name: db_nextcloud
+    env_file: ./db.env
+    labels:
+      - traefik.enable=false
+    volumes:
+      - /mnt/DATA/DOCKER/container_app/docker_db_nextcloud:/var/lib/mysql
+    expose:
+      - 3306
