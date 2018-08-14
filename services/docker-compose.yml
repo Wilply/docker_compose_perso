@@ -11,28 +11,28 @@ volumes:
       driver_opts:
         type: cifs
         device: '//192.168.0.150/MEDIA'
-        o: 'username=media,password=medias3cr3t'
+        o: 'username=media,password=medias3cr3t,uid=33,gid=33'
 
     cifs_clement:
       driver: local
       driver_opts:
         type: cifs
         device: '//192.168.0.150/USERS'
-        o: 'username=clement,password=clements3cr3tpwd'
+        o: 'username=clement,password=clements3cr3tpwd,uid=33,gid=33'
 
     cifs_domaclena:
       driver: local
       driver_opts:
         type: cifs
         device: '//192.168.0.150/DOMACLENA'
-        o: 'username=domaclena,password=domaclenas3cr3t'
+        o: 'username=domaclena,password=domaclenas3cr3t,uid=33,gid=33'
 
     cifs_lecoq:
       driver: local
       driver_opts:
         type: cifs
         device: '//192.168.0.150/LECOQ'
-        o: 'username=lecoq,password=lecoqs3cr3t'
+        o: 'username=lecoq,password=lecoqs3cr3t,uid=33,gid=33'
 
 services:
   airsonic:
@@ -110,45 +110,33 @@ services:
     volumes:
       - /mnt/DATA/DOCKER/container_app/docker_projetweb/IUT_M2105:/app/site
 
-  cells:
-    image: pydio/cells:latest
-    container_name: cells
+  nextcloud:
+    image: nextcloud:stable
+    container_name: nextcloud
     expose:
-      - 8080
-    environment:
-      - CELLS_BIND=0.0.0.0:8080
-      - CELLS_EXTERNAL=pydio.wilply.fr
-      - CELLS_NO_SSL=1
+      - 80
     labels:
       - traefik.enable=true
       - traefik.backend=cells
-      - traefik.frontend.rule=Host:pydio.wilply.fr
-      - traefik.port=8888
+      - traefik.frontend.rule=Host:nextcloud.wilply.fr
+      - traefik.port=80
       - traefik.protocol=http
     volumes:
-      - /mnt/DATA/DOCKER/container_app/docker_pydio:/root/.config/pydio/cells/
+      - /mnt/DATA/DOCKER/container_app/docker_nextcloud/config/:/var/www/html/config/
+      - /mnt/DATA/DOCKER/container_app/docker_nextcloud/core/skeleton/:/var/www/html/core/skeleton/
+      - /mnt/DATA/DOCKER/container_app/docker_nextcloud/custom_apps:/var/www/html/custom_apps/
       - cifs_media:/mnt/media
       - cifs_clement:/mnt/clement
       - cifs_domaclena:/mnt/domaclena
       - cifs_lecoq:/mnt/lecoq
     links:
-      - db_cells
-      - php-fpm
+      - db_nextcloud
 
-  db_cells:
+  db_nextcloud:
     image: mariadb
-    container_name: db_cells
+    container_name: db_nextcloud
     env_file: ./db.env
     volumes:
       - /mnt/DATA/DOCKER/container_app/docker_db:/var/lib/mysql
-    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
     expose:
       - 3306
-
-  php-fpm:
-    image: pydio/cells-php-fpm
-    container_name: php-fpm
-    volumes:
-      - /mnt/DATA/DOCKER/container_app/docker_pydio:/root/.config/pydio/cells/
-    expose:
-      - 9000
