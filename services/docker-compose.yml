@@ -137,6 +137,6 @@ services:
     container_name: db_nextcloud
     env_file: ./db.env
     volumes:
-      - /mnt/DATA/DOCKER/container_app/docker_db:/var/lib/mysql
+      - /mnt/DATA/DOCKER/container_app/docker_db_nextcloud:/var/lib/mysql
     expose:
       - 3306
