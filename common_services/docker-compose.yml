@@ -21,6 +21,8 @@ services:
       - traefik.port=4040
       - traefik.enable=true
       - traefik.protocol=http
+      - traefik.frontend.headers.STSSeconds=315360000
+      - traefik.frontend.headers.STSPreload=true
     volumes:
       - /mnt/DATA/DOCKER/container_app/docker_airsonic/data:/config
       - /mnt/DATA/DOCKER/container_app/docker_airsonic/playlists:/playlists
@@ -43,6 +45,8 @@ services:
       - traefik.port=9091
       - traefik.enable=true
       - traefik.protocol=http
+      - traefik.frontend.headers.STSSeconds=315360000
+      - traefik.frontend.headers.STSPreload=true
     volumes:
       - /mnt/DATA/DOCKER/container_app/docker_transmission:/config
       - /mnt/DATA/DOWNLOAD:/downloads
@@ -55,6 +59,8 @@ services:
     image: mbentley/teamspeak
     container_name: teamspeak
     restart: always
+    labels:
+      - traefik.enable=false
     environment:
       - TZ=Europe/Paris
       - "TS3SERVER_LICENSE=accept"
@@ -76,6 +82,8 @@ services:
       - traefik.port=80
       - traefik.enable=true
       - traefik.protocol=http
+      - traefik.frontend.headers.STSSeconds=315360000
+      - traefik.frontend.headers.STSPreload=true
     expose:
       - 80
     volumes:
