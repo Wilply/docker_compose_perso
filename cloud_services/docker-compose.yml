@@ -39,6 +39,7 @@ services:
   nextcloud:
     image: nextcloud:stable
     container_name: nextcloud
+    restart: always
     expose:
       - 80
     labels:
@@ -51,8 +52,7 @@ services:
       - traefik.frontend.headers.STSPreload=true
     volumes:
       - /mnt/DATA/DOCKER/container_app/docker_nextcloud/default_files:/default_files/
-      - /mnt/DATA/DOCKER/container_app/docker_nextcloud/config:/var/www/html/config/
-      - /mnt/DATA/DOCKER/container_app/docker_nextcloud/custom_apps:/var/www/html/custom_apps/
+      - /mnt/DATA/DOCKER/container_app/docker_nextcloud/nextcloud/:/var/www/html/
       - cifs_media:/mnt/media
       - cifs_clement:/mnt/clement
       - cifs_domaclena:/mnt/domaclena
@@ -63,6 +63,7 @@ services:
   db_nextcloud:
     image: mariadb
     container_name: db_nextcloud
+    restart: always
     env_file: ./db.env
     labels:
       - traefik.enable=false
