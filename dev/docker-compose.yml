@@ -7,14 +7,14 @@ networks:
 
 services:
   beets:
-    image: Wilply/beets-automatic
+    image: wilply/beets-automatic
     restart: always
     environment:
       - DISCOGS_TOKEN="mIHoYFstMolzNkvzZoQopOUyCOiHkHXkqHPFaBSl"
       - PGID=2100
       - PUID=2100
       - MODE="move"
-      - DEL_INPUT="false"
+      - DEL_INPUT=false
     volumes:
       - /mnt/DATA/DOWNLOAD:/input/
       - /mnt/DATA/MEDIA/Musique:/musiclibrary/music/
