@@ -4,45 +4,19 @@ networks:
   default:
     external:
       name: services-net
+
 services:
-
-  cells:
-    image: pydio/cells:latest
-    container_name: cells
-    ports:
-      - "8888:8888"
+  beets:
+    image: Wilply/beets-automatic
+    restart: always
     environment:
-      - CELLS_BIND=0.0.0.0:8888
-      - CELLS_EXTERNAL=cells:8888
-      - CELLS_NO_SSL=1
-    labels:
-      - traefik.enable=true
-      - traefik.backend=cells
-      - traefik.frontend.rule=Host:pydio.wilply.fr
-      - traefik.port=8888
-      - traefik.protocol=http
+      - DISCOGS_TOKEN="mIHoYFstMolzNkvzZoQopOUyCOiHkHXkqHPFaBSl"
+      - PGID=2100
+      - PUID=2100
+      - MODE="move"
+      - DEL_INPUT="false"
     volumes:
-      - /mnt/DATA/DOCKER/container_app/docker_pydio:/root/.config/pydio/cells/
-    links:
-      - mariadb
-      - php-fpm
-
-  mysql:
-    image: mariadb
-    container_name: mariadb
-    environment:
-      - MYSQL_ROOT_PASSWORD=P@ssw0rd
-      - MYSQL_DATABASE=cells
-      - MYSQL_USER=pydio
-      - MYSQL_PASSWORD=P@ssw0rd
-    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
-    expose:
-      - "3306"
-
-  php-fpm:
-    image: pydio/cells-php-fpm:latest
-    container_name: php-fpm
-    volumes:
-      - /mnt/DATA/DOCKER/container_app/docker_pydio:/root/.config/pydio/cells/
-    expose:
-      - "9000"
+      - /mnt/DATA/DOWNLOAD:/input/
+      - /mnt/DATA/MEDIA/Musique:/musiclibrary/music/
+      - /mnt/DATA/DOCKER/container_app/docker_beets:/home/abc/.config/beets/
+      - /mnt/DATA/MEDIA/beetsmusic.db:/musiclibrary/beetsmusic.db
