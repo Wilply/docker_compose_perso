@@ -8,13 +8,16 @@ networks:
 services:
   beets:
     image: wilply/beets-automatic
+    container_name: beets
     restart: always
     environment:
-      - DISCOGS_TOKEN="mIHoYFstMolzNkvzZoQopOUyCOiHkHXkqHPFaBSl"
+      - "DISCOGS_TOKEN=mIHoYFstMolzNkvzZoQopOUyCOiHkHXkqHPFaBSl"
       - PGID=2100
       - PUID=2100
-      - MODE="move"
-      - DEL_INPUT=false
+      - "MODE=move"
+      - "DEL_INPUT=false"
+    labels:
+      - traefik.enable=false
     volumes:
       - /mnt/DATA/DOWNLOAD:/input/
       - /mnt/DATA/MEDIA/Musique:/musiclibrary/music/
