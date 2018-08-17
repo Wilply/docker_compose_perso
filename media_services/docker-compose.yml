@@ -45,6 +45,7 @@ services:
       - traefik.protocol=http
       - traefik.frontend.headers.STSSeconds=315360000
       - traefik.frontend.headers.STSPreload=true
+      - traefik.frontend.auth.basic=admin:$$apr1$$dGdZZiL6$$crrlu9O0KIcF69oDM2DO31
     volumes:
       - /mnt/DATA/MEDIA/Musique:/music
       - /mnt/DATA/DOCKER/container_app/docker_headphones:/config
@@ -70,6 +71,7 @@ services:
       - traefik.protocol=http
       - traefik.frontend.headers.STSSeconds=315360000
       - traefik.frontend.headers.STSPreload=true
+      - traefik.frontend.auth.basic=admin:$$apr1$$D7D5KXZh$$T9JwcejybGDE0YhjqiwHs0
     volumes:
       - /mnt/DATA/DOCKER/container_app/docker_jackett:/config
     expose:
