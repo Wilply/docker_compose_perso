@@ -31,30 +31,6 @@ services:
     ports:
       - 4040:4040
 
-  transmission:
-    image: linuxserver/transmission
-    container_name: transmission
-    restart: always
-    environment:
-      - PGID=2100
-      - PUID=2100
-      - TZ=Europe/Paris
-    labels:
-      - traefik.backend=transmission
-      - traefik.frontend.rule=Host:transmission.wilply.fr
-      - traefik.port=9091
-      - traefik.enable=true
-      - traefik.protocol=http
-      - traefik.frontend.headers.STSSeconds=315360000
-      - traefik.frontend.headers.STSPreload=true
-    volumes:
-      - /mnt/DATA/DOCKER/container_app/docker_transmission:/config
-      - /mnt/DATA/DOWNLOAD:/downloads
-    ports:
-      - 9091:9091
-      - 51413:51413
-      - 51413:51413/udp
-
   teamspeak:
     image: mbentley/teamspeak
     container_name: teamspeak
