@@ -65,7 +65,7 @@ services:
     labels:
       - traefik.backend=jackett
       - traefik.frontend.rule=Host:jackett.wilply.fr
-      - traefik.port=8181
+      - traefik.port=9117
       - traefik.enable=true
       - traefik.protocol=http
       - traefik.frontend.headers.STSSeconds=315360000
