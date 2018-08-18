@@ -34,9 +34,6 @@ services:
     image: linuxserver/headphones
     container_name: headphones
     restart: always
-    environment:
-      - PGID=2100
-      - PUID=2100
     labels:
       - traefik.backend=headphones
       - traefik.frontend.rule=Host:headphones.wilply.fr
@@ -49,8 +46,8 @@ services:
       - /mnt/DATA/MEDIA/Musique:/music
       - /mnt/DATA/DOCKER/container_app/docker_headphones:/config
       - /mnt/DATA/DOWNLOAD:/downloads
-    expose:
-      - 8181
+    ports:
+      - 8181:8181
     links:
       - jackett
       - transmission
@@ -73,5 +70,5 @@ services:
       - traefik.frontend.auth.basic=admin:$$apr1$$D7D5KXZh$$T9JwcejybGDE0YhjqiwHs0
     volumes:
       - /mnt/DATA/DOCKER/container_app/docker_jackett:/config
-    expose:
-      - 9117
+    ports:
+      - 9117:9117
