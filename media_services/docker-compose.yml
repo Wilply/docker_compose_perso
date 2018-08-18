@@ -34,6 +34,8 @@ services:
     image: linuxserver/headphones
     container_name: headphones
     restart: always
+    environment:
+      - PGID=2100
     labels:
       - traefik.backend=headphones
       - traefik.frontend.rule=Host:headphones.wilply.fr
