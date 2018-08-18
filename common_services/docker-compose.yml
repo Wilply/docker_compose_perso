@@ -73,7 +73,7 @@ services:
       - "DISCOGS_TOKEN=mIHoYFstMolzNkvzZoQopOUyCOiHkHXkqHPFaBSl"
       - PGID=2100
       - PUID=2100
-      - "MODE=copy"
+      - "MODE=move"
       - "DEL_INPUT=false"
     labels:
       - traefik.enable=false
