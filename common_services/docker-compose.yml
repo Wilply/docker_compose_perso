@@ -75,10 +75,10 @@ services:
       - PUID=2100
       - "MODE=move"
       - "DEL_INPUT=false"
+      - "INIT_TAG=false"
     labels:
       - traefik.enable=false
     volumes:
-      - /mnt/DATA/DOWNLOAD:/input/
-      - /mnt/DATA/MEDIA/Musique:/musiclibrary/music/
+      - /mnt/DATA/DOWNLOAD:/input
+      - /mnt/DATA/MEDIA/Musique:/music/
       - /mnt/DATA/DOCKER/container_app/docker_beets:/home/abc/.config/beets/
-      - /mnt/DATA/MEDIA/beetsmusic.db:/musiclibrary/beetsmusic.db
