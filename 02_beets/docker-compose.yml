@@ -1,0 +1,26 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: services-net
+
+services:
+
+  beets:
+    image: wilply/beets-automatic
+    container_name: beets
+    restart: always
+    environment:
+      - "DISCOGS_TOKEN=mIHoYFstMolzNkvzZoQopOUyCOiHkHXkqHPFaBSl"
+      - PGID=1500
+      - PUID=1500
+      - "MODE=move"
+      - "DEL_INPUT=false"
+    labels:
+      - traefik.enable=false
+    volumes:
+      - /mnt/DATA/DOWNLOAD:/input/
+      - /mnt/DATA/MEDIA/Musique:/musiclibrary/music/
+      - /mnt/ETC/DOCKER/container_files/02_beets:/home/abc/.config/beets/
+      - /mnt/DATA/MEDIA/beetsmusic.db:/musiclibrary/beetsmusic.db
