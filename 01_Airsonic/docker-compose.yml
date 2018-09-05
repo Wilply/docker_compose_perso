@@ -23,9 +23,9 @@ services:
       - traefik.enable=true
       - traefik.protocol=http
     volumes:
-      - /mnt/ETC/DOCKER/container_files/docker_airsonic/data:/config
-      - /mnt/ETC/DOCKER/container_files/docker_airsonic/playlists:/playlists
-      - /mnt/ETC/DOCKER/container_files/docker_airsonic/podcasts:/podcasts
+      - /mnt/ETC/DOCKER/container_files/01_airsonic/data:/config
+      - /mnt/ETC/DOCKER/container_files/01_airsonic/playlists:/playlists
+      - /mnt/ETC/DOCKER/container_files/01_airsonic/podcasts:/podcasts
       - /mnt/DATA/MEDIA/Musique:/music
     ports:
       - 4040:4040

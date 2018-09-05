@@ -22,7 +22,7 @@ services:
     volumes:
       - /mnt/DATA/DOWNLOAD:/input/
       - /mnt/DATA/MEDIA/Musique:/musiclibrary/music/
-      - /mnt/ETC/DOCKER/container_files/docker_beets:/home/abc/.config/beets/
+      - /mnt/ETC/DOCKER/container_files/02_beets:/home/abc/.config/beets/
       - /mnt/DATA/MEDIA/beetsmusic.db:/musiclibrary/beetsmusic.db
 
   headphones:
@@ -41,7 +41,7 @@ services:
       - traefik.frontend.headers.STSPreload=true
     volumes:
       - /mnt/DATA/MEDIA/Musique:/music
-      - /mnt/ETC/DOCKER/container_files/docker_headphones:/config
+      - /mnt/ETC/DOCKER/container_files/02_headphones:/config
       - /mnt/DATA/DOWNLOAD:/downloads
     ports:
       - 8181:8181

@@ -30,4 +30,4 @@ services:
       - traefik.frontend.auth.basic=admin:$$apr1$$qHhf.Q.e$$uTBfawp3takoGjAvQiBBS1 #Password
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock  # Listen to docker events (unix sock)
-      - /mnt/ETC/DOCKER/container_files/docker_traefik/:/etc/traefik/
+      - /mnt/ETC/DOCKER/container_files/04_traefik/:/etc/traefik/

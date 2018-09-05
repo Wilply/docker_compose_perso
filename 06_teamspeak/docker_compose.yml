@@ -17,7 +17,7 @@ services:
       - TZ=Europe/Paris
       - "TS3SERVER_LICENSE=accept"
     volumes:
-      - /mnt/ETC/DOCKER/container_files/docker_teamspeak/data:/data
+      - /mnt/ETC/DOCKER/container_files/06_teamspeak/data:/data
     ports:
       - 9987:9987/udp
       - 10011:10011
