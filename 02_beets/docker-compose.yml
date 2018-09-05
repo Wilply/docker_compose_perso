@@ -21,6 +21,5 @@ services:
       - traefik.enable=false
     volumes:
       - /mnt/DATA/DOWNLOAD:/input/
-      - /mnt/DATA/MEDIA/Musique:/musiclibrary/music/
+      - /mnt/DATA/MEDIA/Musique:/music/
       - /mnt/ETC/DOCKER/container_files/02_beets:/home/abc/.config/beets/
-      - /mnt/DATA/MEDIA/beetsmusic.db:/musiclibrary/beetsmusic.db
