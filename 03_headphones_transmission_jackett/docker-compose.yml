@@ -6,7 +6,7 @@ networks:
       name: services-net
 
 services:
-  
+
   headphones:
     image: linuxserver/headphones
     container_name: headphones
@@ -23,7 +23,7 @@ services:
       - traefik.frontend.headers.STSPreload=true
     volumes:
       - /mnt/DATA/MEDIA/Musique:/music
-      - /mnt/ETC/DOCKER/container_files/02_headphones:/config
+      - /mnt/ETC/DOCKER/container_files/03_headphones:/config
       - /mnt/DATA/DOWNLOAD:/downloads
     ports:
       - 8181:8181
@@ -54,8 +54,6 @@ services:
       - 9091:9091
       - 51413:51413
       - 51413:51413/udp
-
-
 
   jackett:
     image: linuxserver/jackett
