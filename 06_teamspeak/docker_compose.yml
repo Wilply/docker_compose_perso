@@ -1,0 +1,23 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: services-net
+
+services:
+
+  teamspeak:
+    image: mbentley/teamspeak
+    container_name: teamspeak
+    restart: always
+    labels:
+      - traefik.enable=false
+    environment:
+      - TZ=Europe/Paris
+      - "TS3SERVER_LICENSE=accept"
+    volumes:
+      - /mnt/DATA/DOCKER/container_app/docker_teamspeak/data:/data
+    ports:
+      - 9987:9987/udp
+      - 10011:10011

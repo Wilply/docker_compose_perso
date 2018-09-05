@@ -1,0 +1,31 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: services-net
+
+services:
+
+  airsonic:
+    image: linuxserver/airsonic
+    container_name: airsonic
+    restart: always
+    environment:
+      - TZ=Europe/Paris
+      - "PGID=1500"
+      - "PUID=1500"
+      - "JAVA_OPTS=-Xmx768m"
+    labels:
+      - traefik.backend=airsonic
+      - traefik.frontend.rule=Host:airsonic.wilply.fr
+      - traefik.port=4040
+      - traefik.enable=true
+      - traefik.protocol=http
+    volumes:
+      - /mnt/ETC/DOCKER/container_files/docker_airsonic/data:/config
+      - /mnt/ETC/DOCKER/container_files/docker_airsonic/playlists:/playlists
+      - /mnt/ETC/DOCKER/container_files/docker_airsonic/podcasts:/podcasts
+      - /mnt/DATA/MEDIA/Musique:/music
+    ports:
+      - 4040:4040

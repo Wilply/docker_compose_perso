@@ -1,0 +1,40 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: services-net
+
+services:
+
+  nextcloud:
+    image: nextcloud:stable
+    container_name: nextcloud
+    restart: always
+    expose:
+      - 80
+    labels:
+      - traefik.enable=true
+      - traefik.backend=nextcloud
+      - traefik.frontend.rule=Host:nextcloud.wilply.fr
+      - traefik.port=80
+      - traefik.protocol=http
+      - traefik.frontend.headers.STSSeconds=315360000
+      - traefik.frontend.headers.STSPreload=true
+    volumes:
+      - /mnt/ETC/DOCKER/container_files/docker_nextcloud/default_files:/default_files/
+      - /mnt/ETC/DOCKER/container_files/docker_nextcloud/nextcloud/:/var/www/html/
+    links:
+      - db_nextcloud
+
+  db_nextcloud:
+    image: mariadb
+    container_name: db_nextcloud
+    restart: always
+    env_file: ./db.env
+    labels:
+      - traefik.enable=false
+    volumes:
+      - /mnt/ETC/DOCKER/container_files/docker_db_nextcloud:/var/lib/mysql
+    expose:
+      - 3306

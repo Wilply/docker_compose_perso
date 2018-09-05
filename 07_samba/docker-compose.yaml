@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  samba:
+    image: dperson/samba
+    environment:
+      - TZ=Europe/Paris
+    restart: always
+    volumes:
+      - /home/clement/Musique:/mnt/music
+    command: -s "music;/mnt/music;yes;no;no"
+             -g "server string = NAS de Clément, Samba Server"
+             -g "netbios name = NAS_CLEM"
+             -u "test;toto;1000"
+             -u "testb;toto;1001;testbgrp"
+             -g "force user ="

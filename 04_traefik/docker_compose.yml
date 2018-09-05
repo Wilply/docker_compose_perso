@@ -1,0 +1,33 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: services-net
+
+services:
+
+  traefik:
+    image: traefik
+    container_name: traefik
+    restart: always
+    command: --api --docker
+    ports:
+      - 80:80     # Http
+      - 8080:8080 # Web UI
+      - 443:443   # Https
+    # This file is on my mail
+    env_file:
+      - ovh_key.env
+    labels:
+      - traefik.backend=traefik
+      - traefik.frontend.rule=Host:traefik.wilply.fr
+      - traefik.port=8080
+      - traefik.enable=true
+      - traefik.protocol=http
+      - traefik.frontend.headers.STSSeconds=315360000
+      - traefik.frontend.headers.STSPreload=true
+      - traefik.frontend.auth.basic=admin:$$apr1$$qHhf.Q.e$$uTBfawp3takoGjAvQiBBS1 #Password
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Listen to docker events (unix sock)
+      - /mnt/ETC/DOCKER/container_files/docker_traefik/:/etc/traefik/

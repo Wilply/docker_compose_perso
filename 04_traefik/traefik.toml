@@ -1,0 +1,39 @@
+debug = true
+
+logLevel = "INFO"
+defaultEntryPoints = ["https","http"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+
+[retry]
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "wilply.fr"
+watch = true
+exposedByDefault = false
+
+[acme]
+email = "nas@wilply.fr"
+storage = "/etc/traefik/acme.json"
+onHostRule = true
+onDemand = false
+acmeLogging = true
+#caServer = "https://acme-staging-v02.api.letsencrypt.org/directory" #TEST SERVER, COMMENT IN PROD
+entryPoint = "https"
+#  [acme.httpChallenge] # Uncomment there and comment dnsChallenge if you dont want to use API
+#  entryPoint = "http"
+[acme.dnsChallenge]
+  provider = "ovh"
+  delayBeforeCheck = 0
+[[acme.domains]]
+   main = "wilply.fr"
+[[acme.domains]]
+   main = "*.wilply.fr"
