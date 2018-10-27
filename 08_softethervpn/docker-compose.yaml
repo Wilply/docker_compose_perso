@@ -34,6 +34,13 @@ services:
     image: siomiz/softethervpn:alpine
     container_name: softethervpn
     restart: always
+    ports:
+      - 500:500/udp
+      - 4500:4500/udp
+      - 1701:1701/tcp
+      - 1194:1194/udp
+    expose:
+      - 443
     cap_add:
       - NET_ADMIN
     labels:
