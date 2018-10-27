@@ -6,35 +6,37 @@ networks:                  #
       name: services-net   #
 
 # POUR GENERER LE FICHIER DE CONF
-services:
-  vpn:
-    image: siomiz/softethervpn:alpine
-    container_name: softethervpn_test_DELETE
-    cap_add:
-      - NET_ADMIN
-    ports:
-      - 500:500/udp
-      - 4500:4500/udp
-      - 1701:1701/tcp
-      - 1194:1194/udp
-    expose:
-      - 443
-    environment:
-      - PSK= #PSK, GENERER MANUELLEMENT : openssl rand -base64 24 ==> voir bitwarden
-      - USERS= #USERS=u1:mdp1;u2:mdp2 ==> voir bitwarden
-      - SPW= # ==> voir bitwarden
-      - HPW= # ==> voir bitwarden
+#services:
+#  vpn:
+#    image: siomiz/softethervpn:alpine
+#    container_name: softethervpn_test_DELETE
+#    cap_add:
+#      - NET_ADMIN
+#    ports:
+#      - 500:500/udp
+#      - 4500:4500/udp
+#      - 1701:1701/tcp
+#      - 1194:1194/udp
+#    expose:
+#      - 443
+#    environment:
+#      - PSK= #PSK, GENERER MANUELLEMENT : openssl rand -base64 24 ==> voir bitwarden
+#      - USERS= #USERS=u1:mdp1;u2:mdp2 ==> voir bitwarden
+#      - SPW= # ==> voir bitwarden
+#      - HPW= # ==> voir bitwarden
       #let the server generate .cert and .key
 
 #PROD; APRES AVOIR GENERE LE FICHIER DE CONF
 #COPIER LE FICHIER DE CONF  /usr/vpnserver/vpn_server.config DANS container_app/08_softethervpn
 #docker cp softethervpn_test_DELETE:/usr/vpnserver/vpn_server.config /mnt/ETC/DOCKER/container_files/08_softethervpn/vpn_server.config
-#services:
-#  softethervpn:
-#    image: siomiz/softethervpn:alpine
-#    container_name: softethervpn
-#    restart: always
-#    cap_add:
-#      - NET_ADMIN
-#    volumes:
-#      - /mnt/ETC/DOCKER/container_files/08_softethervpn/vpn_server.config:/usr/vpnserver/vpn_server.config
+services:
+  softethervpn:
+    image: siomiz/softethervpn:alpine
+    container_name: softethervpn
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    labels:
+      - traefik.enable=false
+    volumes:
+      - /mnt/ETC/DOCKER/container_files/08_softethervpn/vpn_server.config:/usr/vpnserver/vpn_server.config
