@@ -29,6 +29,7 @@ networks:                  #
 #PROD; APRES AVOIR GENERE LE FICHIER DE CONF
 #COPIER LE FICHIER DE CONF  /usr/vpnserver/vpn_server.config DANS container_app/08_softethervpn
 #docker cp softethervpn_test_DELETE:/usr/vpnserver/vpn_server.config /mnt/ETC/DOCKER/container_files/08_softethervpn/vpn_server.config
+#ADD TAEFIK LABEL TO REDIRECT OPENvpn over tls port 443
 services:
   softethervpn:
     image: siomiz/softethervpn:alpine
