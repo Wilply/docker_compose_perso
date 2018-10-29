@@ -1,23 +1,50 @@
 version: '3'
 
-#networks:
-#  default:
-#    external:
-#      name: services-net
+networks:
+  default:
+    external:
+      name: services-net
 
 services:
   pydio:
     image: wilply/pydio_cells:latest
-    container_name: pydio_test
+    container_name: pydio_cells
     ports:
       - 8888:8888
-#    container_name: pydio
-#    restart: always
-#    volumes:
-#      - /mnt/ETC/DOCKER/container_files/09_pydio:/home/abc/.config/
+    container_name: pydio
+    restart: always
+    links:
+      - pydio_db
+    volumes:
+      - /mnt/ETC/DOCKER/container_files/09_pydio/pydio:/home/abc/.config/
+      - /mnt/DATA/USERS:/mnt/USERS
+      - /mnt/DATA/MEDIA:/mnt/MEDIA
     environment:
-      - CELLS_ETERNAL=pydio_test:8888
+      - CELLS_ETERNAL=pydio_cells:8888
       - CELLS_BIND=0.0.0.0:8888
       - SSL=0
       - PGID=1500
       - PUID=1500
+    labels:
+      - traefik.backend=airsonic
+      - traefik.frontend.rule=Host:pydio.wilply.fr
+      - traefik.port=8888
+      - traefik.enable=true
+      - traefik.protocol=http
+
+  pydio_db:
+    image: mariadb:latest
+    container_name: pydio_db
+    restart: always
+    labels:
+      - traefik.enable=false
+    volumes:
+      - /mnt/ETC/DOCKER/container_files/09_pydio/pydio_db/mysql:/var/lib/mysql
+    expose:
+      - 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpwd
+      - MYSQL_DATABASE=cells
+      - MYSQL_USER=pydio
+      - MYSQL_PASSWORD=pydiopwd
+    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
