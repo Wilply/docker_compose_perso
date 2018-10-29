@@ -36,6 +36,10 @@ services:
     image: mariadb:latest
     container_name: pydio_db
     restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 1536M
     labels:
       - traefik.enable=false
     volumes:
