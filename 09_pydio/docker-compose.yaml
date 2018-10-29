@@ -1,0 +1,21 @@
+version: '3'
+
+#networks:
+#  default:
+#    external:
+#      name: services-net
+
+services:
+  pydio:
+    image: wilply/pydio_cells:lastest
+    container_name: pydio_test
+#    container_name: pydio
+#    restart: always
+#    volumes:
+#      - /mnt/ETC/DOCKER/container_files/09_pydio:/home/abc/.config/
+    environment:
+      - CELLS_ETERNAL=cells:8080
+      - CELLS_BIND=0.0.0.0:8080
+      - SSL=0
+      - PGID=1500
+      - PUID=1500
