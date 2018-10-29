@@ -26,7 +26,7 @@ services:
       - PGID=1500
       - PUID=1500
     labels:
-      - traefik.backend=airsonic
+      - traefik.backend=pydio
       - traefik.frontend.rule=Host:pydio.wilply.fr
       - traefik.port=8888
       - traefik.enable=true
