@@ -5,6 +5,12 @@ networks:
     external:
       name: services-net
 
+volumes:
+    pydio_db_data:
+      name: pydio_db_data
+      type: bind
+        source: /mnt/ETC/DOCKER/container_files/09_pydio/pydio_db/mysql
+
 services:
   pydio:
     image: wilply/pydio_cells:latest
@@ -33,13 +39,13 @@ services:
       - traefik.protocol=http
 
   pydio_db:
-    image: mysql:latest
+    image: mariadb:latest
     container_name: pydio_db
     restart: always
     labels:
       - traefik.enable=false
     volumes:
-      - /mnt/ETC/DOCKER/container_files/09_pydio/pydio_db/mysql:/var/lib/mysql
+      - pydio_db_data:/var/lib/mysql
     expose:
       - 3306
     environment:
