@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 networks:
   default:
@@ -33,10 +33,9 @@ services:
       - traefik.protocol=http
 
   pydio_db:
-    image: mariadb:latest
+    image: mysql:latest
     container_name: pydio_db
     restart: always
-    mem_limit: 1536M
     labels:
       - traefik.enable=false
     volumes:
