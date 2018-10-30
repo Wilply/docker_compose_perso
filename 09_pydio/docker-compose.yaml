@@ -48,5 +48,5 @@ services:
       - MARIADB_USERNAME=pydio
       - MARIADB_PASSWORD=pydiopwd
       - MARIADB_CHARACTER_SET_SERVER=utf8mb4
-      - MARIADB_COLLATION_SERVER=utf8_general_ci
+      - MARIADB_COLLATION_SERVER=utf8mb4_general_ci
 #    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
