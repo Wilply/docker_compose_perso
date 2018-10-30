@@ -33,7 +33,7 @@ services:
       - traefik.protocol=http
 
   pydio_db:
-    image: mysql:latest
+    image: bitnami/mariadb:latest
     container_name: pydio_db
     restart: always
     labels:
@@ -43,9 +43,8 @@ services:
     expose:
       - 3306
     environment:
-      - MYSQL_ROOT_PASSWORD=rootpwd
-      - MYSQL_DATABASE=cells
-      - MYSQL_USER=pydio
-      - MYSQL_PASSWORD=pydiopwd
-      - MYSQL_START_TIMEOUT=900
-    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
+      - MARIADB_ROOT_PASSWORD=rootpwd
+      - MARIADB_DATABASE=cells
+      - MARIADB_USER=pydio
+      - MARIADB_PASSWORD=pydiopwd
+#    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
