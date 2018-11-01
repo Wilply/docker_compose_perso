@@ -43,8 +43,8 @@ services:
       - /mnt/ETC/DOCKER/container_files/09_pydio/pydio:/root/.config/pydio/cells
     environment:
       - CELLS_NO_SSL=1
-      - CELLS_BIND=0.0.0.0:8888
-      - CELLS_EXTERNAL=pydio_cells:8888
+      - CELLS_BIND=0.0.0.0:8080
+      - CELLS_EXTERNAL=pydio_cells:8080
 
   pydio_db:
     image: webhippie/mariadb:latest
