@@ -14,6 +14,10 @@ services:
     user: "1500:1500"
     expose:
       - 80
+    environment:
+      - TZ=Europe/Paris
+      - "PGID=1500"
+      - "PUID=1500"
     labels:
       - traefik.enable=true
       - traefik.backend=nextcloud
@@ -23,8 +27,8 @@ services:
       - traefik.frontend.headers.STSSeconds=315360000
       - traefik.frontend.headers.STSPreload=true
     volumes:
-      - /mnt/ETC/DOCKER/container_files/05_nextcloud/default_files:/var/www/html/core/skeleton
-      - /mnt/ETC/DOCKER/container_files/05_nextcloud/nextcloud/:/var/www/html/
+      - /mnt/ETC/DOCKER/container_files/05_nextcloud:/config/www/nextcloud
+      - /mnt/DATA:/mnt/DATA
     links:
       - db_nextcloud
 
