@@ -8,7 +8,7 @@ networks:
 services:
 
   nextcloud:
-    image: nextcloud:stable
+    image: linuxserver/nextcloud
     container_name: nextcloud
     restart: always
     user: "1500:1500"
