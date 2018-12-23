@@ -22,7 +22,7 @@ services:
       - traefik.frontend.headers.STSSeconds=315360000
       - traefik.frontend.headers.STSPreload=true
     volumes:
-      - /mnt/ETC/DOCKER/container_files/05_nextcloud/default_files:/default_files/
+      - /mnt/ETC/DOCKER/container_files/05_nextcloud/default_files:/var/www/html/core/skeleton
       - /mnt/ETC/DOCKER/container_files/05_nextcloud/nextcloud/:/var/www/html/
     links:
       - db_nextcloud
