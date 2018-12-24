@@ -34,20 +34,29 @@ services:
 
   pydio:
     image: pydio/cells
+    #image: wilply/pydio_cells
     container_name: pydio_cells
     ports:
-      - 8888:8080
+      - 8081:8080
     links:
       - pydio_db
     volumes:
       - /mnt/ETC/DOCKER/container_files/09_pydio/pydio:/root/.config/pydio/cells
     environment:
       - CELLS_NO_SSL=1
-      - CELLS_BIND=0.0.0.0:8080
-      - CELLS_EXTERNAL=pydio_cells:8080
+      - CELLS_BIND=:8080
+      - CELLS_EXTERNAL=:8080
+      #- PUID=1500
+      #- PGID=1500
+     labels:
+      - traefik.backend=pydio
+      - traefik.frontend.rule=Host:pydio.wilply.fr
+      - traefik.port=8080
+      - traefik.enable=true
+      - traefik.protocol=http
 
   pydio_db:
-    image: webhippie/mariadb:latest
+    image: mariadb
     container_name: pydio_db
     restart: always
     labels:
@@ -57,10 +66,8 @@ services:
     expose:
       - 3306
     environment:
-      - MARIADB_ROOT_PASSWORD=rootpwd
-      - MARIADB_DATABASE=cells
-      - MARIADB_USERNAME=pydio
-      - MARIADB_PASSWORD=pydiopwd
-      - MARIADB_CHARACTER_SET_SERVER=utf8mb4
-      - MARIADB_COLLATION_SERVER=utf8mb4_general_ci
-#    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
+      - MYSQL_ROOT_PASSWORD=rootpwd
+      - MYSQL_DATABASE=cells
+      - MYSQL_USERNAME=pydio
+      - MYSQL_PASSWORD=pydiopwd
+    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
