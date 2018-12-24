@@ -17,7 +17,7 @@ services:
       - /mnt/ETC/DOCKER/container_files/09_pydio/pydio:/root/.config/pydio/cells
       - /mnt/DATA:/mnt/DATA
     environment:
-      - CELLS_NO_SSL=1
+      - SSL=0
       - CELLS_BIND=:8080
       - CELLS_EXTERNAL=:8080
       - PUID=1500
