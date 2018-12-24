@@ -8,8 +8,7 @@ networks:
 services:
   pydio:
     image: pydio/cells
-    #image: wilply/pydio_cells
-    container_name: pydio_cells
+    image: wilply/pydio_cells
     ports:
       - 8081:8080
     links:
@@ -20,8 +19,8 @@ services:
       - CELLS_NO_SSL=1
       - CELLS_BIND=:8080
       - CELLS_EXTERNAL=:8080
-      #- PUID=1500
-      #- PGID=1500
+      - PUID=1500
+      - PGID=1500
     labels:
       - traefik.backend=pydio
       - traefik.frontend.rule=Host:pydio.wilply.fr
