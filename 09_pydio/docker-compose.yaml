@@ -22,7 +22,7 @@ services:
       - CELLS_EXTERNAL=:8080
       #- PUID=1500
       #- PGID=1500
-     labels:
+    labels:
       - traefik.backend=pydio
       - traefik.frontend.rule=Host:pydio.wilply.fr
       - traefik.port=8080
