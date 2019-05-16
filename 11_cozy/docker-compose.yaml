@@ -1,0 +1,47 @@
+version: "3"
+
+networks:
+  external:
+    name: services-net
+  intranet:
+    internal: true
+
+volumes:
+  couchdb-data:
+  cozy-storage:
+
+services:
+  couchdb:
+    image: apache/couchdb
+    volumes:
+      - couchdb-data:/opt/couchdb/data
+    networks:
+      - intranet
+
+  redis:
+    image: redis:alpine
+    networks:
+      - intranet
+
+  cozy:
+    image: cozy-dev
+    links:
+      - couchdb:couchdb
+      - redis:redis
+    ports:
+      - "8080:8080"
+      - "6060:6060"
+    volumes:
+      - cozy-storage:/cozy/config
+    networks:
+      - services-net
+      - intranet
+    labels:
+      - traefik.backend=cozy
+      - traefik.frontend.rule=HostRegexp:{subdomain:[a-z]+}.cozy.wilply.fr
+      - traefik.port=8080
+      - traefik.enable=true
+      - traefik.protocol=http
+    depends_on:
+      - couchdb
+      - redis
