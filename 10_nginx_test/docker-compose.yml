@@ -1,0 +1,27 @@
+
+version: '3'
+
+networks:
+  default:
+    external:
+      name: services-net
+
+services:
+
+  nginx_test:
+    image: nginx:alpine
+    container_name: nginx_test
+    restart: always
+    environment:
+      - TZ=Europe/Paris
+    labels:
+      - traefik.backend=test_nginx
+      - traefik.frontend.rule=Host:test.wilply.fr
+      - traefik.port=80
+      - traefik.enable=true
+      - traefik.protocol=http
+    volumes:
+      - /mnt/ETC/DOCKER/container_files/10_nginx_test/mediatek/src/main/template:/usr/share/nginx/html:ro
+    ports:
+      - 8083:80
+      - 8084:443
