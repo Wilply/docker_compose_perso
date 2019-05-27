@@ -1,8 +1,9 @@
 version: "3"
 
 networks:
-  external:
-    name: services-net
+  internet:
+    external:
+      name: services-net
   intranet:
     internal: true
 
@@ -34,9 +35,10 @@ services:
     volumes:
       - cozy-storage:/cozy/config
     networks:
-      - services-net
-      - intranet
+      - default
+      - internet
     labels:
+      - traefik.docker.network=services-net
       - traefik.backend=cozy
       - traefik.frontend.rule=HostRegexp:{subdomain:[a-z]+}.cozy.wilply.fr,cozy.wilply.fr
       - traefik.port=8080
