@@ -24,7 +24,7 @@ services:
       - intranet
 
   cozy:
-    image: cozy:v3
+    image: wilply/cozy-stack
     links:
       - couchdb:couchdb
       - redis:redis
@@ -38,7 +38,7 @@ services:
       - intranet
     labels:
       - traefik.backend=cozy
-      - traefik.frontend.rule=HostRegexp:{subdomain:[a-z]+}.cozy.wilply.fr
+      - traefik.frontend.rule=HostRegexp:{subdomain:[a-z]+}.cozy.wilply.fr,cozy.wilply.fr
       - traefik.port=8080
       - traefik.enable=true
       - traefik.protocol=http
