@@ -7,10 +7,6 @@ networks:
   intranet:
     internal: true
 
-volumes:
-  couchdb-data:
-  cozy-storage:
-
 services:
   couchdb:
     image: apache/couchdb
