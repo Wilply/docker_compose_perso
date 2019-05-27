@@ -17,7 +17,7 @@ services:
     container_name: couchdb_cozy
     restart: always
     volumes:
-      - couchdb-data:/opt/couchdb/data
+      - /mnt/ETC/DOCKER/container_files/11_cozy/couchdb:/opt/couchdb/data
     networks:
       - intranet
 
@@ -39,7 +39,7 @@ services:
       - "8080"
       - "6060:6060"
     volumes:
-      - cozy-storage:/cozy/config
+      - /mnt/ETC/DOCKER/container_files/11_cozy/cozy-stack:/cozy/config
     networks:
       - intranet
       - services-net
