@@ -39,6 +39,8 @@ services:
     networks:
       - intranet
       - services-net
+    environment:
+      DOMAIN: 'cozy.wilply.fr'
     labels:
       - traefik.docker.network=services-net
       - traefik.backend=cozy
