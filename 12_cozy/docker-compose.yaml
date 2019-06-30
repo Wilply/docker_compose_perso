@@ -11,6 +11,7 @@ services:
   couchdb:
     container_name: cozy-couchdb
     image: apache/couchdb
+    restart: always
     volumes:
       - /mnt/ETC/DOCKER/container_files/12_cozy/couchdb:/opt/couchdb/data
     networks:
@@ -19,6 +20,7 @@ services:
   redis:
     container_name: cozy-redis
     image: redis:alpine
+    restart: always
     volumes:
       - /mnt/ETC/DOCKER/container_files/12_cozy/redis:/data
     networks:
@@ -28,6 +30,7 @@ services:
   cozy:
     container_name: cozy-stack
     image: wilply/cozy-stack
+    restart: always
     links:
       - couchdb:couchdb
       - redis:redis
