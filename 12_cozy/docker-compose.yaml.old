@@ -4,48 +4,43 @@ networks:
   services-net:
     external:
       name: services-net
-  internal-net:
+  intranet:
     internal: true
 
 services:
   couchdb:
-    container_name: cozy-couchdb
     image: apache/couchdb
+    container_name: couchdb_cozy
+    restart: always
     volumes:
-      - /mnt/ETC/DOCKER/container_files/12_cozy/couchdb:/opt/couchdb/data
+      - /mnt/ETC/DOCKER/container_files/11_cozy/couchdb:/opt/couchdb/data
     networks:
-      - internal-net
+      - intranet
 
   redis:
-    container_name: cozy-redis
     image: redis:alpine
-    volumes:
-      - /mnt/ETC/DOCKER/container_files/12_cozy/redis:/data
+    container_name: redis_cozy
+    restart: always
     networks:
-      - internal-net
-    command: ["redis-server", "--appendonly", "yes"]
+      - intranet
 
   cozy:
-    container_name: cozy-stack
     image: wilply/cozy-stack
+    container_name: cozy
+    restart: always
     links:
       - couchdb:couchdb
       - redis:redis
     ports:
-      - 8080
+      - "8080"
+      - "6060:6060"
     volumes:
-      - /mnt/ETC/DOCKER/container_files/12_cozy/cozy-stack/config:/cozy/config
-      - /mnt/ETC/DOCKER/container_files/12_cozy/cozy-stack/storage:/cozy/storage
+      - /mnt/ETC/DOCKER/container_files/11_cozy/cozy-stack:/cozy/config
     networks:
-      - internal-net
+      - intranet
       - services-net
     environment:
       DOMAIN: 'cozy.wilply.fr'
-      UID: 1500
-      GID: 1500
-      RUN_AS_ROOT: 0
-    env_file:
-      - cozy.env
     labels:
       - traefik.docker.network=services-net
       - traefik.backend=cozy
