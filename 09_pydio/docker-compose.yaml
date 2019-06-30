@@ -10,7 +10,8 @@ services:
     image: wilply/pydio_cells
     container_name: pydio
     ports:
-      - 8081:8080
+      - 80:80
+      - 443:443
     links:
       - pydio_db
     volumes:
@@ -18,8 +19,8 @@ services:
       - /mnt/DATA:/mnt/DATA
     environment:
       - SSL=0
-      - CELLS_BIND=:8080
-      - CELLS_EXTERNAL=:8080
+      - CELLS_BIND=localhost:80
+      - CELLS_EXTERNAL=http://cells.wilply.fr
       - PUID=1500
       - PGID=1500
     labels:
