@@ -38,7 +38,7 @@ services:
       - 8080
     volumes:
       - /mnt/ETC/DOCKER/container_files/12_cozy/cozy-stack/config:/cozy/config
-      - /mnt/ETC/DOCKER/container_files/12_cozy/cozy-stack/storage:/cozy/storage
+      - /mnt/DATA/COZY/storage:/cozy/storage
     networks:
       - internal-net
       - services-net
